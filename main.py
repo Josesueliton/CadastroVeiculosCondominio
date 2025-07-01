@@ -9,7 +9,7 @@ from pesquisa_veiculo_page import PlacaBuscaPage
 class App(ctk.CTk):
     def __init__(self):
         super().__init__()
-        self.geometry("800x500")
+        self.geometry('800x600')
         self.title("Sistema de Cadastro - Condomínio")
         ctk.set_appearance_mode("dark")
         ctk.set_default_color_theme("blue")
@@ -33,6 +33,7 @@ class App(ctk.CTk):
 
         self.pagina_atual = None
         self.mostrar_pagina("veiculos")
+        
 
     def mostrar_pagina(self, nome):
         if self.pagina_atual:

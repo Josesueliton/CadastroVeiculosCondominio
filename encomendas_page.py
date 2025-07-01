@@ -27,6 +27,14 @@ class EncomendasPage(ctk.CTkFrame):
 
         ctk.CTkButton(self, text="Salvar Encomenda", command=self.salvar_encomenda).pack(pady=10)
 
+        # Frame para o label no canto direito
+        label_frame = ctk.CTkFrame(self, fg_color="transparent")
+        label_frame.pack(fill="x", padx=10)
+
+        # Label alinhado à direita
+        self.label_quantidade = ctk.CTkLabel(label_frame, text="Não Entregue: 0", font=("Arial", 16))
+        self.label_quantidade.pack(side="right")
+
         self.lista_frame = ctk.CTkScrollableFrame(self,  height=250, fg_color="transparent")
         self.lista_frame.pack(fill="both", expand=True)
         self.carregar_encomendas()
@@ -61,7 +69,12 @@ class EncomendasPage(ctk.CTkFrame):
 
         conn = conectar()
         cursor = conn.cursor()
-        for row in cursor.execute("SELECT * FROM encomendas ORDER BY id DESC"):
+
+        cursor.execute("SELECT COUNT(*) FROM encomendas WHERE status = 'Não Entregue'")
+        quantidade = cursor.fetchone()[0]
+        self.label_quantidade.configure(text=f"Não Entregue: {quantidade}")
+
+        for row in cursor.execute("SELECT * FROM encomendas ORDER BY CASE status WHEN 'Não Entregue' THEN 0 ELSE 1 END, id DESC"):
             id_, datahora, destinatario, lote, codigo, status , horaentrega = row
            
             if status == "Entregue":

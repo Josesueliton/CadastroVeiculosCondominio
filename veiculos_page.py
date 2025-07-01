@@ -11,6 +11,8 @@ class VeiculosPage(ctk.CTkFrame):
 
     def build_page(self):
         ctk.CTkLabel(self, text="Cadastro de Veículos", font=("Arial", 20)).pack(pady=10)
+        # Frame para o label no canto direito
+
 
         self.entry_nome = ctk.CTkEntry(self, placeholder_text="Nome")
         self.entry_nome.pack(pady=5)
@@ -35,7 +37,14 @@ class VeiculosPage(ctk.CTkFrame):
 
         ctk.CTkButton(self, text="Salvar Veículo", command=self.salvar_veiculo).pack(pady=10)
 
+        # Frame para o label no canto direito
+        label_frame = ctk.CTkFrame(self, fg_color="transparent")
+        label_frame.pack(fill="x", padx=10)
 
+        # Label alinhado à direita
+        self.label_quantidade = ctk.CTkLabel(label_frame, text="Veículos presentes: 0", font=("Arial", 16))
+        self.label_quantidade.pack(side="right")
+    
         self.lista_frame = ctk.CTkScrollableFrame(self, height=250, fg_color="transparent")
         self.lista_frame.pack(fill="both", expand=True)
         self.carregar_veiculos()
@@ -104,8 +113,12 @@ class VeiculosPage(ctk.CTkFrame):
 
         conn = conectar()
         cursor = conn.cursor()
+
+        cursor.execute("SELECT COUNT(*) FROM veiculos WHERE status = 'Entrou'")
+        quantidade = cursor.fetchone()[0]
+        self.label_quantidade.configure(text=f"Veículos presentes: {quantidade}")
         
-        for row in cursor.execute("SELECT * FROM veiculos ORDER BY id DESC"):
+        for row in cursor.execute("SELECT * FROM veiculos ORDER BY CASE status WHEN 'Entrou' THEN 0 ELSE 1 END, id DESC"):
             id_, datahora, nome, lote, placa, modelo, status, saida = row
 
             
