@@ -1,0 +1,4 @@
+# Ignorar arquivos e pastas
+build
+main.spec
+dist
