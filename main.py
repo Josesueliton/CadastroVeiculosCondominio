@@ -5,6 +5,7 @@ from veiculos_page import VeiculosPage
 from encomendas_page import EncomendasPage
 from menu_lateral import MenuLateral
 from pesquisa_veiculo_page import PlacaBuscaPage
+from agenda_page import AgendaPage
 
 class App(ctk.CTk):
     def __init__(self):
@@ -25,6 +26,7 @@ class App(ctk.CTk):
             "veiculos": VeiculosPage(self.container),
             "encomendas": EncomendasPage(self.container),
             "placa_busca": PlacaBuscaPage(self.container),
+            "agenda": AgendaPage(self.container),
            
         }
         

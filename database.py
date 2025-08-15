@@ -35,5 +35,14 @@ def criar_tabelas():
     )
     """)
 
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS contatos (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        nome TEXT,
+        lote TEXT,
+        celular TEXT
+    )
+    """)
+
     conn.commit()
     conn.close()

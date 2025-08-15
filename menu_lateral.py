@@ -30,6 +30,9 @@ class MenuLateral(ctk.CTkFrame):
 
         ctk.CTkLabel(self, text="").pack(pady=60)
 
+        btn_agenda = ctk.CTkButton(self, text="Contatos", command=lambda: self.callback("agenda"))
+        btn_agenda.pack(pady=10, padx=20, fill="x")
+
         btn_veiculos = ctk.CTkButton(self, text="Veículos", command=lambda: self.callback("veiculos"))
         btn_veiculos.pack(pady=10, padx=20, fill="x")
 
